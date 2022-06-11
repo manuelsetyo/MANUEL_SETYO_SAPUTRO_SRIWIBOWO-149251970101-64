@@ -1091,6 +1091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 5, y: 0}
+  resetPosition: {x: 3.383583, y: -0.9267462}
 --- !u!50 &1186193518
 Rigidbody2D:
   serializedVersion: 4
