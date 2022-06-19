@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PowerUpManager : MonoBehaviour
 {
-    public Transform spawnArea;
     public int maxPowerUpAmount;
-    public int spawnInterval;
-    public Vector2 powerUpAreaMin;
-    public Vector2 powerUpAreaMax;
     public List<GameObject> powerUpTemplateList;
 
     private List<GameObject> powerUpList;
 
+    public Transform spawnArea;
+    public Vector2 powerUpAreaMax;
+    public Vector2 powerUpAreaMin;
+
+    public int spawnInterval;
     private float timer;
 
     private void Start()
@@ -21,11 +22,11 @@ public class PowerUpManager : MonoBehaviour
         timer = 0;
     }
 
-    private void Update()
+
+    void Update()
     {
         timer += Time.deltaTime;
-
-        if (timer > spawnInterval)
+        if(timer > spawnInterval)
         {
             GenerateRandomPowerUp();
             timer -= spawnInterval;
@@ -39,21 +40,17 @@ public class PowerUpManager : MonoBehaviour
 
     public void GenerateRandomPowerUp(Vector2 position)
     {
-        if (powerUpList.Count >= maxPowerUpAmount)
+        if(powerUpList.Count >= maxPowerUpAmount)
         {
             return;
         }
 
-        if (position.x < powerUpAreaMin.x ||
-            position.x > powerUpAreaMax.x ||
-            position.y < powerUpAreaMin.y ||
-            position.y > powerUpAreaMax.y)
+        if(position.x < powerUpAreaMin.x || position.x > powerUpAreaMax.x || position.y < powerUpAreaMin.y || position.y > powerUpAreaMax.y)
         {
             return;
         }
 
         int randomIndex = Random.Range(0, powerUpTemplateList.Count);
-
         GameObject powerUp = Instantiate(powerUpTemplateList[randomIndex], new Vector3(position.x, position.y, powerUpTemplateList[randomIndex].transform.position.z), Quaternion.identity, spawnArea);
         powerUp.SetActive(true);
 
@@ -66,9 +63,16 @@ public class PowerUpManager : MonoBehaviour
         Destroy(powerUp);
     }
 
+    public IEnumerator AutoRemovePowerUp(GameObject powerUp)
+    {
+        yield return new WaitForSeconds(7);
+        powerUpList.Remove(powerUp);
+        Destroy(powerUp);
+    }
+
     public void RemoveAllPowerUp()
     {
-        while (powerUpList.Count > 0)
+        while(powerUpList.Count > 0)
         {
             RemovePowerUp(powerUpList[0]);
         }

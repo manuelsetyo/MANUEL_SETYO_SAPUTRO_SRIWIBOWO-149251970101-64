@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
-    public Text skorKiri;
-    public Text skorKanan;
+    public Text leftScore;
+    public Text rightScore;
 
     public ScoreManager manager;
 
-    private void Update()
+    void Update()
     {
-        skorKiri.text = manager.leftScore.ToString();
-        skorKanan.text = manager.rightScore.ToString();
+        leftScore.text = manager.leftScore.ToString();
+        rightScore.text = manager.rightScore.ToString();
     }
 }
